@@ -145,7 +145,9 @@ export class RsInstance extends TypedEmitter<RsInstanceEvents>{
 
 	emitAppEvent<T extends keyof Alt1EventType>(permission: AppPermission | "", type: T, event: Alt1EventType[T]) {
 		for (let context of selectAppContexts(this, permission)) {
-			context.send("appevent", type, event);
+			if (context) {
+				context.send("appevent", type, event);
+			}
 		}
 	}
 
