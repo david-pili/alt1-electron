@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo "Starting alt1"
+cd /home/justin/alt1-toolkit
+npm run watch &
+sleep 10
+npm run ui
