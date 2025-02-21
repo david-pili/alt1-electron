@@ -47,8 +47,10 @@ export async function showImageData(img: ImageData) {
 		let dir = "./debugimgs";
 		fs.mkdirSync(dir, { recursive: true });
 		let filename = path.resolve(`${dir}/debugimg_${Math.random() * 1000 | 0}.png`);
-		fs.writeFileSync(filename, await img.toFileBytes("image/png"));
-		shell.openPath(filename);
+		if (filename) {
+			fs.writeFileSync(filename, await img.toFileBytes("image/png"));
+			shell.openPath(filename);
+		}
 	}
 }
 

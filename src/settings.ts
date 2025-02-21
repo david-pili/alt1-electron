@@ -4,6 +4,7 @@ import { configFile, readJsonWithBOM, weborigin } from "./lib";
 import { identifyApp } from "./appconfig";
 import fetch from "node-fetch";
 import { CaptureMode } from "./native";
+import { resolve } from 'path';
 
 export type AppPermission = UservarType<typeof checkPermission>;
 export type PinRect = UservarType<typeof checkPinRect>;
@@ -51,6 +52,7 @@ export var settings: UservarType<typeof checkSettings>
 
 export async function loadSettings() {
 	try {
+		console.log(`Attempting to read config from: ${resolve(configFile)}`);
 		let file = JSON.parse(fs.readFileSync(configFile, "utf8"));
 		settings = checkSettings.load(file, { defaultOnError: true });
 	} catch (e) {

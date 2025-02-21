@@ -11,7 +11,7 @@ import "./style.scss";
 import "./index.html";
 (window as any).remote = remote;
 var appview: Electron.WebviewTag | null = null;
-var appcontents: WebContents | null = null;
+let appcontents: Electron.WebContents | null | undefined = null;
 var mainmodule = remote.getGlobal("Alt1lite") as typeof import("../main");
 //TODO backup if this fails
 var thiswindow = mainmodule.getManagedWindow(remote.getCurrentWebContents())!;
@@ -42,7 +42,8 @@ function AppFrame(p: {}) {
 		view.addEventListener("dom-ready", e => {
 			//TODO is there a better way to get a ref to the frame?
 			thiswindow.appFrameId = view.getWebContentsId();
-			appcontents = remote.webContents.fromId(appview!.getWebContentsId());
+			const webContents = remote.webContents.fromId(appview!.getWebContentsId());
+			appcontents = webContents ? webContents : null;
 		});
 
 		appview = view;
